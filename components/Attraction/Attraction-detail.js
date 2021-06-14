@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Linking } from "react-native";
 /*
   This js file will retrieve the details of attraction place from Attraction-list.js
 */
@@ -9,12 +9,20 @@ export default function AttractionDetail({ route }) {
 
   return (
     <View style={styles.container}>
-      <Text>Place: {Attraction}</Text>
-      <Text>Description: {Description}</Text>
-      <Text>Address: {Address}</Text>
-      <Text>Coordinates: {Coordinates}</Text>
-      <Text>Phone Number: {PhoneNo}</Text>
-      <Text>Website: {Website}</Text>
+      <Text style={styles.text}>Place: {Attraction}</Text>
+      <Text style={styles.text}>Description: {Description}</Text>
+      <Text style={styles.text}>Address: {Address}</Text>
+      <Text style={styles.text}>Coordinates: {Coordinates}</Text>
+      <Text style={styles.text}>Phone Number: {PhoneNo}</Text>
+      <Text style={styles.text}>Website: </Text>
+      <Text
+        style={styles.website}
+        onPress={() => {
+          Linking.openURL(Website);
+        }}
+      >
+        {Website}
+      </Text>
     </View>
   );
 }
@@ -22,7 +30,15 @@ export default function AttractionDetail({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
+  },
+  text: {
+    textAlign: "left",
+    fontSize: 16,
+  },
+  website: {
+    color: "#03b1fc",
+    fontWeight: "bold",
   },
 });
