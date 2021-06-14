@@ -53,8 +53,6 @@ export default function Home() {
             }}>
         <Text style={styles.linkBtnTxt}>More Information</Text>
       </TouchableOpacity>
-
-      {/* <TouchableOpacity style={styles.linkBtn} onPress={() => {Linking.openURL({requirement.link};) */}
    
     </View>
   );
