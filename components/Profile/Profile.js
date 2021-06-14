@@ -50,7 +50,7 @@ export default function Profile() {
             firstName: childSnapshot.val().firstName,
             profilePic: childSnapshot.val().profilePic,
             username: childSnapshot.val().username,
-            vaccine: childSnapshot.val().false,
+            vaccine: childSnapshot.val().vaccine,
           });
         });
       });
