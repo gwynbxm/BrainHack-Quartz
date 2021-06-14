@@ -14,14 +14,13 @@ export default function AttractionDetail({ route }) {
       <Text style={styles.text}>Address: {Address}</Text>
       <Text style={styles.text}>Coordinates: {Coordinates}</Text>
       <Text style={styles.text}>Phone Number: {PhoneNo}</Text>
-      <Text style={styles.text}>Website: </Text>
       <Text
         style={styles.website}
         onPress={() => {
           Linking.openURL(Website);
         }}
       >
-        {Website}
+        Click here to know more!
       </Text>
     </View>
   );
