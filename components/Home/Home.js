@@ -1,7 +1,15 @@
 // import * as React from "react";
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { SafeAreaView, 
+  StyleSheet, 
+  Text, 
+  View, 
+  TouchableOpacity, 
+  Linking,
+  ScrollView 
+} from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
+import firebase from "../../config";
 
 export default function Home() {
 
@@ -34,9 +42,39 @@ export default function Home() {
         { id: 1, name: 'Australia', query: 'Australia' },
         { id: 2, name: 'Hong Kong', query: 'Hong%20Kong' },
         { id: 3, name: 'Taiwan', query: 'Taiwan' },
+        { id: 4, name: 'Singapore', query: 'Singapore' },
       ];
 
-    
+       // Requirements
+      const [requirements, setReq] = useState({
+        req: "",
+        link: "",
+      });
+
+      const getReq = async () => {
+        const id = "SGtoHK";
+
+        firebase
+          .database()
+          .ref("/Requirements")
+          .orderByKey()
+          .equalTo(id)
+          .on("value", (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+              setReq({
+                req: childSnapshot.val().basic,
+                link: childSnapshot.val().link,
+              });
+            });
+          });
+      };
+
+      useEffect(() => {
+        getReq();
+      }, []);
+
+      const reqArray = (requirements.req).split(';');
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <SafeAreaView style={styles.container}>
@@ -126,7 +164,7 @@ export default function Home() {
               <Text
                 style={[styles.statsText, { fontSize: 26, fontWeight: "bold", color: "green" }]}
               >
-                {activeCases}
+                {countryChosenTo ? activeCases : "-"}
               </Text>
               <Text style={styles.statsText}>active cases</Text>
             </View>
@@ -140,18 +178,14 @@ export default function Home() {
                 },
               ]}
             >
-              <Text
-                style={[styles.statsText, { fontSize: 26, fontWeight: "bold", color: "#e0a800" }]}
-              >
-                {recoveredCases}
+              <Text style={[styles.statsText, { fontSize: 26, fontWeight: "bold", color: "#e0a800" }]}>
+              {countryChosenTo ? recoveredCases : "-"}
               </Text>
               <Text style={styles.statsText}>total recovered</Text>
             </View>
             <View style={styles.statsBox}>
-              <Text
-                style={[styles.statsText, { fontSize: 26, fontWeight: "bold", color: "#e00000" }]}
-              >
-                {deathCases}
+              <Text style={[styles.statsText, { fontSize: 26, fontWeight: "bold", color: "#e00000" }]}>
+              {countryChosenTo ? deathCases : "-"}
               </Text>
               <Text style={styles.statsText}>total deaths</Text>
             </View>
@@ -163,6 +197,16 @@ export default function Home() {
           <ScrollView>
             {/* This is where the requirements will be */}
           </ScrollView>
+
+          {reqArray.map((item) => 
+            <Text key={item.i} style={styles.reqTxt}>{item}</Text>
+          )}
+
+          <TouchableOpacity style={styles.linkBtn} onPress={() => {
+                  Linking.openURL(requirements.link);
+                      }}>
+            <Text style={styles.linkBtnTxt}>More Information</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity style={styles.attractionBtn} onPress={() => {}}>
             <Text>VIEW ATTRACTIONS</Text>
@@ -231,5 +275,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 15,
     alignItems: "center",
+  },
+  linkBtn: {
+    padding: 15,
+    width: "100%",
+    backgroundColor: "#e00000",
+    borderRadius: 10,
+    marginTop: 15,
+    alignItems: "center",
+  },
+  reqTxt: {
+    color: 'blue',
+  },
+  linkBtnTxt: {
+    color: "white",
   },
 });
