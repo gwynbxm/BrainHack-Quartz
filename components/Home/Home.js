@@ -8,6 +8,7 @@ import {
   Linking,
 } from "react-native";
 import firebase from "../../config";
+import { Ionicons } from '@expo/vector-icons'; 
 
 export default function Home({navigation}) {
 
@@ -44,8 +45,11 @@ export default function Home({navigation}) {
   return (
     <View style={styles.container}>
       
-      {reqArray.map((item) => 
+      {reqArray.map((item) =>
+      <View style = {styles.action}>
+      <Ionicons name="airplane" size={24} color="black" />
       <Text key={item.i} style={styles.reqTxt}>{item}</Text>
+      </View>
       )}
 
       <TouchableOpacity style={styles.linkBtn} onPress={() => {
@@ -81,5 +85,14 @@ const styles = StyleSheet.create({
 
   reqTxt: {
     color: 'blue',
+  },
+
+  action: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f2f2f2",
+    paddingBottom: 5,
   },
 });
