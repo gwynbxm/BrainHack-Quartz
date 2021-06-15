@@ -1,11 +1,51 @@
 import * as React from "react";
 import { Text, View, StyleSheet, Linking } from "react-native";
+import { Fontisto } from "@expo/vector-icons";
+import firebase from "../../config";
 /*
   This js file will retrieve the details of attraction place from Attraction-list.js
 */
 export default function AttractionDetail({ route }) {
   const { Attraction, Description, Address, Coordinates, PhoneNo, Website } =
     route.params;
+  const isSaved = false;
+
+  const addBookmark = async () => {
+    firebase
+      .database()
+      //this is harcoded for testing. to push new bookmark to a user will be "Accounts/" + "user1"
+      .ref("Accounts/user1/Bookmarks")
+      .once("value")
+      .then(function (snapshot) {
+        snapshot.forEach(function (accountSnapshot) {
+          accountSnapshot.child("Hong Kong").ref.push(Attraction);
+        });
+      });
+    alert("Bookmark added!");
+
+    // firebase
+    //   .database()
+    //   .ref("Accounts/" + "user1" + "/Bookmarks/Hong Kong")
+    //   .set({
+    //     Attraction,
+    //   });
+    // alert("Updated user's bookmark!");
+  };
+
+  //This is a reference for removing bookMark.. hopefully it works
+  const deleteBookmark = async () => {
+    firebase
+      .database()
+      .ref("Accounts/user1/Bookmarks")
+      .once("value")
+      .then(function (snapshot) {
+        snapshot.forEach(function (accountSnapshot) {
+          accountSnapshot.child("Hong Kong").ref.remove();
+        });
+      });
+
+    alert("Bookmark removed!");
+  };
 
   return (
     <View style={styles.container}>
@@ -22,6 +62,14 @@ export default function AttractionDetail({ route }) {
       >
         Click here to know more!
       </Text>
+
+      {/*<Fontisto name="bookmark-alt" size={24} color="black" />*/}
+      <Fontisto
+        name="bookmark"
+        size={24}
+        color="black"
+        onPress={() => addBookmark()}
+      />
     </View>
   );
 }
