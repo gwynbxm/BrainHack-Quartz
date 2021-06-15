@@ -9,18 +9,66 @@ import {
   ScrollView,
 } from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 export default function Home() {
+  const [countryChosenTo, setCountryTo] = useState("");
+  const [placeholderTo, setPlaceHolderTo] = useState("Arrival");
+  const [placeholderFrom, setPlaceHolderFrom] = useState("Departure");
+  const [activeCases, setActiveCases] = useState("");
+  const [deathCases, setDeathCases] = useState("");
+  const [recoveredCases, setRecoveredCases] = useState("");
+
+  const countries = [
+    { id: 1, name: "Australia", query: "Australia" },
+    { id: 2, name: "Hong Kong", query: "Hong%20Kong" },
+    { id: 3, name: "Taiwan", query: "Taiwan" },
+  ];
+
+  useEffect(() => {
+    fetch("https://disease.sh/v3/covid-19/countries/" + countryChosenTo)
+      .then((response) => response.json())
+      .then((responJson) => {
+        setActiveCases(responJson.todayCases);
+        setDeathCases(responJson.deaths);
+        setRecoveredCases(responJson.recovered);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [countryChosenTo]);
+
+  // async function getStats(items) {
+  //   console.log("Function called " + `${items.qu}`);
+
+  //   await fetch("https://disease.sh/v3/covid-19/countries/%22+countryChosen")
+  //     .then((response) => {
+  //       response.json();
+  //     })
+  //     .then((responseData) => {
+  //       if (`${data}` === "Hong Kong") {
+  //         console.log(responseData);
+  //       }
+  //       // setServerData(responseData.results);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
           <Text style={styles.titleStyle}>Where are you visiting?</Text>
+          {/* <FontAwesome5 name="plane-departure" size={24} color="black" /> */}
           <SearchableDropdown
-            onTextChange={(text) => console.log(text)}
+            onTextChange={(country) => console.log(country)}
             //On text change listner on the searchable input
             onItemSelect={
-              (data) => data.name
+              (country) => {
+                setPlaceHolderFrom(country.name);
+              }
               //console.log("item selected" + data.name)
             }
             //onItemSelect called after the selection from the dropdown
@@ -38,22 +86,26 @@ export default function Home() {
               //to restrict the items dropdown hieght
               maxHeight: "90%",
             }}
-            items={data}
+            items={countries}
             //mapping of item array
             defaultIndex={0}
             //default selected item index
-            placeholder="From"
+            placeholder={placeholderFrom}
             //place holder for the search input
             resetValue={false}
             //reset textInput Value with true and false state
             underlineColorAndroid="transparent"
             //To remove the underline from the android input
           />
+          {/* <FontAwesome5 name="plane-arrival" size={24} color="black" /> */}
           <SearchableDropdown
             onTextChange={(text) => console.log(text)}
             //On text change listner on the searchable input
             onItemSelect={
-              (items) => getStats(items.query)
+              (country) => {
+                setCountryTo(country.name);
+                setPlaceHolderTo(country.name);
+              }
               //console.log("item selected" + data.name)
             }
             //onItemSelect called after the selection from the dropdown
@@ -71,11 +123,11 @@ export default function Home() {
               //to restrict the items dropdown hieght
               maxHeight: "90%",
             }}
-            items={items}
+            items={countries}
             //mapping of item array
             defaultIndex={0}
             //default selected item index
-            placeholder="To"
+            placeholder={placeholderTo}
             //place holder for the search input
             resetValue={false}
             //reset textInput Value with true and false state
@@ -86,11 +138,14 @@ export default function Home() {
           <View style={styles.statsContainer}>
             <View style={styles.statsBox}>
               <Text
-                style={[styles.statsText, { fontSize: 26, fontWeight: "bold" }]}
+                style={[
+                  styles.statsText,
+                  { fontSize: 26, fontWeight: "bold", color: "green" },
+                ]}
               >
-                {totalCases}
+                {activeCases}
               </Text>
-              <Text style={styles.statsText}>total cases</Text>
+              <Text style={styles.statsText}>active cases</Text>
             </View>
             <View
               style={[
@@ -103,21 +158,25 @@ export default function Home() {
               ]}
             >
               <Text
-                style={[styles.statsText, { fontSize: 26, fontWeight: "bold" }]}
+                style={[
+                  styles.statsText,
+                  { fontSize: 26, fontWeight: "bold", color: "red" },
+                ]}
               >
-                {/* {totalDeaths} */}
-                1.9
+                {deathCases}
               </Text>
-              <Text style={styles.statsText}>total Deaths</Text>
+              <Text style={styles.statsText}>deaths</Text>
             </View>
             <View style={styles.statsBox}>
               <Text
-                style={[styles.statsText, { fontSize: 26, fontWeight: "bold" }]}
+                style={[
+                  styles.statsText,
+                  { fontSize: 26, fontWeight: "bold", color: "blue" },
+                ]}
               >
-                {/* {totalVaccines} */}
-                194
+                {recoveredCases}
               </Text>
-              <Text style={styles.statsText}>total vaccines</Text>
+              <Text style={styles.statsText}>Recovery</Text>
             </View>
           </View>
 
@@ -126,7 +185,11 @@ export default function Home() {
             {/* This is where the requirements will be */}
           </ScrollView>
 
-          <TouchableOpacity style={styles.attractionBtn} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.attractionBtn}
+            activeOpacity={0.7}
+            onPress={() => {}}
+          >
             <Text>VIEW ATTRACTIONS</Text>
           </TouchableOpacity>
         </View>
