@@ -38,24 +38,6 @@ export default function Home() {
       });
   }, [countryChosenTo]);
 
-  // async function getStats(items) {
-  //   console.log("Function called " + `${items.qu}`);
-
-  //   await fetch("https://disease.sh/v3/covid-19/countries/%22+countryChosen")
-  //     .then((response) => {
-  //       response.json();
-  //     })
-  //     .then((responseData) => {
-  //       if (`${data}` === "Hong Kong") {
-  //         console.log(responseData);
-  //       }
-  //       // setServerData(responseData.results);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
-
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <SafeAreaView style={styles.container}>
