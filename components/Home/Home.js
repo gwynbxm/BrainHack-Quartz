@@ -4,9 +4,11 @@ import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, ScrollView } fr
 import SearchableDropdown from "react-native-searchable-dropdown";
 
 export default function Home() {
-    const [loading, setLoading] = useState(true);
 
-    const [countryChosen, setCountry] = useState("");
+    const [countryChosenTo, setCountryTo] = useState();
+    const [placeholderTo, setPlaceHolderTo] = useState("To");
+    const [placeholderFrom, setPlaceHolderFrom] = useState("From");
+    const [statsTitle, setStatsTitle] = useState("");
 
     //TextOutput
     const [activeCases, setActive] = useState("");  //active cases
@@ -14,19 +16,17 @@ export default function Home() {
     const [recoveredCases, setRecovered] = useState("");     //recovered cases
     
     useEffect(() => {
-      setLoading(true)
-      fetch("https://disease.sh/v3/covid-19/countries/"+countryChosen)
+      fetch("https://disease.sh/v3/covid-19/countries/"+countryChosenTo)
       .then((response) => response.json())
       .then((responseJson) => {
-        setActive(responseJson.todayCases)
+        setActive(responseJson.active)
         setDeath(responseJson.deaths)
         setRecovered(responseJson.recovered)
       })
       .catch((error) => {
         console.error(error);
       });
-      setLoading(false)
-    }, [countryChosen]);
+    }, [countryChosenTo]);
 
 
     const countries = [
@@ -42,12 +42,15 @@ export default function Home() {
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
           <Text style={styles.titleStyle}>Where are you visiting?</Text>
+      
+          {/* FROM Seachable DropDown*/}
           <SearchableDropdown
-            onTextChange={(text) => console.log(text)}
+            onTextChange={(country) => console.log(country)}
             //On text change listner on the searchable input
             onItemSelect={
-              (data) => data.name
-              //console.log("item selected" + data.name)
+              (country) => {
+                setPlaceHolderFrom(country.name)
+              }
             }
             //onItemSelect called after the selection from the dropdown
             containerStyle={{ padding: 5 }}
@@ -64,44 +67,11 @@ export default function Home() {
               //to restrict the items dropdown hieght
               maxHeight: "90%",
             }}
-            items={data}
+            items={countries}
             //mapping of item array
             defaultIndex={0}
             //default selected item index
-            placeholder="From"
-            //place holder for the search input
-            resetValue={false}
-            //reset textInput Value with true and false state
-            underlineColorAndroid="transparent"
-            //To remove the underline from the android input
-          />
-          <SearchableDropdown
-            onTextChange={(text) => console.log(text)}
-            //On text change listner on the searchable input
-            onItemSelect={
-              (items) => getStats(items.query)
-              //console.log("item selected" + data.name)
-            }
-            //onItemSelect called after the selection from the dropdown
-            containerStyle={{ padding: 5 }}
-            //suggestion container style
-            textInputStyle={styles.textInput}
-            itemStyle={styles.itemStyle}
-            //single dropdown item style
-            itemTextStyle={{
-              //text style of a single dropdown item
-              color: "#222",
-            }}
-            itemsContainerStyle={{
-              //items container style you can pass maxHeight
-              //to restrict the items dropdown hieght
-              maxHeight: "90%",
-            }}
-            items={items}
-            //mapping of item array
-            defaultIndex={0}
-            //default selected item index
-            placeholder="To"
+            placeholder={placeholderFrom}
             //place holder for the search input
             resetValue={false}
             //reset textInput Value with true and false state
@@ -109,10 +79,52 @@ export default function Home() {
             //To remove the underline from the android input
           />
 
+          {/* TO Searchable DropDown*/}
+          <SearchableDropdown
+            onTextChange={(text) => console.log(text)}
+            //On text change listner on the searchable input
+            onItemSelect={
+              (country) => {
+                setCountryTo(country.query)
+                setPlaceHolderTo(country.name)
+                setStatsTitle(country.name)
+              }
+            }
+            //onItemSelect called after the selection from the dropdown
+            containerStyle={{ padding: 5 }}
+            //suggestion container style
+            textInputStyle={styles.textInput}
+            itemStyle={styles.itemStyle}
+            //single dropdown item style
+            itemTextStyle={{
+              //text style of a single dropdown item
+              color: "#222",
+            }}
+            itemsContainerStyle={{
+              //items container style you can pass maxHeight
+              //to restrict the items dropdown hieght
+              maxHeight: "90%",
+            }}
+            items={countries}
+            //mapping of item array
+            defaultIndex={0}
+            //default selected item index
+            placeholder={placeholderTo}
+            //place holder for the search input
+            resetValue={false}
+            //reset textInput Value with true and false state
+            underlineColorAndroid="transparent"
+            //To remove the underline from the android input
+          />
+
+          {/* COVID19 Statistics Section */}
+          <Text style={{fontSize:20, fontWeight: 'bold', color: '#497080' }}>
+            {statsTitle} COVID19-Statistics
+          </Text>
           <View style={styles.statsContainer}>
             <View style={styles.statsBox}>
               <Text
-                style={[styles.statsText, { fontSize: 26, fontWeight: "bold" }]}
+                style={[styles.statsText, { fontSize: 26, fontWeight: "bold", color: "green" }]}
               >
                 {activeCases}
               </Text>
@@ -129,24 +141,24 @@ export default function Home() {
               ]}
             >
               <Text
-                style={[styles.statsText, { fontSize: 26, fontWeight: "bold" }]}
+                style={[styles.statsText, { fontSize: 26, fontWeight: "bold", color: "#e0a800" }]}
               >
                 {recoveredCases}
-                1.9
               </Text>
               <Text style={styles.statsText}>total recovered</Text>
             </View>
             <View style={styles.statsBox}>
               <Text
-                style={[styles.statsText, { fontSize: 26, fontWeight: "bold" }]}
+                style={[styles.statsText, { fontSize: 26, fontWeight: "bold", color: "#e00000" }]}
               >
                 {deathCases}
-                194
               </Text>
               <Text style={styles.statsText}>total deaths</Text>
             </View>
           </View>
 
+
+           {/* Requirements Section */}
           <Text style={styles.titleStyle}>Requirements</Text>
           <ScrollView>
             {/* This is where the requirements will be */}
@@ -159,7 +171,7 @@ export default function Home() {
       </SafeAreaView>
     </View>
   );
-            }
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
