@@ -19,13 +19,13 @@ export default function App() {
             let iconName;
             if (route.name === "Others") {
               iconName = "address-book";
-              focused ? (color = "navy") : (color = "skyblue");
+              focused ? (color = "#051C60") : (color = "#B4D9EE");
             } else if (route.name === "Home") {
               iconName = "home";
-              focused ? (color = "navy") : (color = "skyblue");
+              focused ? (color = "#051C60") : (color = "#B4D9EE");
             } else if (route.name === "Profile") {
               iconName = "user";
-              focused ? (color = "navy") : (color = "skyblue");
+              focused ? (color = "#051C60") : (color = "#B4D9EE");
             }
 
             // You can return any component that you like here!
@@ -33,8 +33,8 @@ export default function App() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: "navy",
-          inactiveTintColor: "skyblue",
+          activeTintColor: "#051C60",
+          inactiveTintColor: "#B4D9EE",
         }}
       >
         <Tab.Screen name="Home" component={Home} />
