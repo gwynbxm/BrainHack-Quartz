@@ -9,32 +9,84 @@ import {
   TouchableOpacity,
   View,
   Image,
+  Button,
 } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";; 
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import firebase from "../../config.js";
 
-export default function Profile() {
+import Register from "../Register/Register";
+import Login from "../Login/Login";
 
+const Stack = createStackNavigator();
+
+export default function ProfileStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Guest" component={Guest} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="Login" component={Login} />
+    </Stack.Navigator>
+  );
+}
+
+function Guest({ navigation }) {
+  // Check if there is any user logged on
+  const checkedIfLoggedIn = async () => {
+    await firebase.auth().onAuthStateChanged((user) => {
+      console.log("Loading: " + user);
+      if (user) {
+        navigation.navigate("Profile");
+      }
+    });
+  };
+
+  useEffect(() => {
+    checkedIfLoggedIn();
+  });
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => navigation.navigate("Login")}
+      >
+        <Text style={styles.BtnTitle}>LOGIN</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.registerBtn}
+        onPress={() => navigation.navigate("Register")}
+      >
+        <Text style={styles.BtnTitle}>REGISTER</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+function Profile({ navigation }) {
   const [isModify, setisModify] = useState(false);
-  
+
   const updateState = () => {
     setisModify(!isModify);
   };
 
   const [errorText, setErrorText] = useState("");
 
-  // const userUid = firebase.auth().currentUser.uid;
-  const userUid = "user1";
+  const userUid = firebase.auth().currentUser.uid;
+  // const userUid = "user1";
 
   const [userData, setUserData] = useState({
     email: "",
     firstName: "",
     profilePic: "",
     username: "",
-    vaccine: false
+    vaccine: false,
   });
 
   const getUserData = async () => {
@@ -77,23 +129,35 @@ export default function Profile() {
   };
 
   const deleteUser = async () => {
-    await firebase.database().ref("/Accounts/" + userUid).set(null);
+    await firebase
+      .database()
+      .ref("/Accounts/" + userUid)
+      .set(null);
     alert("deleted user");
   };
 
-  const signOut = () =>{
-    firebase.auth()
-    .signOut()
-    .then(() => console.log('User signed out!'));
-  } 
+  const signOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        navigation.navigate("Login");
+      })
+      .then(() => console.log("User signed out!"));
+  };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <Button onPress={signOut} title="Log Out" />,
+    });
+  });
 
   const doNothing = () => {
     return;
-  }
-  
+  };
+
   return (
     <View style={styles.container}>
-
       {/* Profile Picture */}
       <TouchableOpacity onPress={() => {}}>
         <View style={styles.dpContainer}>
@@ -101,7 +165,7 @@ export default function Profile() {
             style={styles.profileDp}
             imageStyle={{ borderRadius: 100 }}
             source={{
-              uri: (userData.profilePic),
+              uri: userData.profilePic,
             }}
           >
             <View style={styles.cameraContainer}>
@@ -112,11 +176,24 @@ export default function Profile() {
       </TouchableOpacity>
 
       {/* Vaccination Status */}
-      <View style = {{padding: 15, width: "100%", borderRadius: 10, marginTop: 15, alignItems: "center", 
-      borderWidth: 2, borderColor: (userData.vaccine? "green" : "red")}}>
-      <FontAwesome5 name="syringe" size={24} color={(userData.vaccine? "green" : "red")} />
-      <Text style = {{color: (userData.vaccine? "green" : "red")}}>
-        {userData.vaccine? "Vaccinated":"Not vaccinated"}
+      <View
+        style={{
+          padding: 15,
+          width: "100%",
+          borderRadius: 10,
+          marginTop: 15,
+          alignItems: "center",
+          borderWidth: 2,
+          borderColor: userData.vaccine ? "green" : "red",
+        }}
+      >
+        <FontAwesome5
+          name="syringe"
+          size={24}
+          color={userData.vaccine ? "green" : "red"}
+        />
+        <Text style={{ color: userData.vaccine ? "green" : "red" }}>
+          {userData.vaccine ? "Vaccinated" : "Not vaccinated"}
         </Text>
       </View>
 
@@ -158,15 +235,15 @@ export default function Profile() {
       </View>
 
       {/* Modify/Save Toggle Button */}
-      <TouchableOpacity style={styles.modifyBtn} 
-      onPress={
-        () => { updateState(); (isModify? updateUser(): doNothing())}
-      }>
-        <Text style={styles.BtnTitle}>
-          {isModify ? "SAVE" : "MODIFY"}
-        </Text>
+      <TouchableOpacity
+        style={styles.modifyBtn}
+        onPress={() => {
+          updateState();
+          isModify ? updateUser() : doNothing();
+        }}
+      >
+        <Text style={styles.BtnTitle}>{isModify ? "SAVE" : "MODIFY"}</Text>
       </TouchableOpacity>
-
 
       {/* Delete Account Button */}
       <TouchableOpacity
@@ -223,12 +300,12 @@ const styles = StyleSheet.create({
     color: "black",
   },
 
-  saveProfileBtn: {
+  modifyBtn: {
     padding: 15,
     width: "100%",
-    backgroundColor: "orange",
+    backgroundColor: "green",
     borderRadius: 10,
-    marginTop: 10,
+    marginTop: 15,
     alignItems: "center",
   },
 
@@ -241,17 +318,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  BtnTitle: {
-    color: "white",
-  },
-
-  modifyBtn: {
+  loginBtn: {
     padding: 15,
     width: "100%",
-    backgroundColor: "green",
+    backgroundColor: "orange",
     borderRadius: 10,
     marginTop: 15,
     alignItems: "center",
+  },
+  registerBtn: {
+    padding: 15,
+    width: "100%",
+    backgroundColor: "blue",
+    borderRadius: 10,
+    marginTop: 15,
+    alignItems: "center",
+  },
+
+  BtnTitle: {
+    color: "white",
   },
 
   input: {

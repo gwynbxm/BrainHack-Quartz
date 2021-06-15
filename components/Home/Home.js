@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import firebase from "../../config";
 
-export default function Home() {
+export default function Home({navigation}) {
 
   // Requirements
   const [requirements, setReq] = useState({
