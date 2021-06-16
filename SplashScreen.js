@@ -5,7 +5,7 @@ import logo from "./assets/logo.png";
 export default function SplashScreen({ navigation }) {
   setTimeout(() => {
     navigation.navigate("Home");
-  }, 2000);
+  }, 5000);
   return (
     <View style={styles.container}>
       <Image source={logo} style={{ width: 150, height: 120 }} />
