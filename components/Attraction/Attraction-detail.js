@@ -1,13 +1,19 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Linking, ScrollView } from "react-native";
-import { Fontisto } from "@expo/vector-icons";
+import { Fontisto, AntDesign } from "@expo/vector-icons";
 import firebase from "../../config";
 /*
   This js file will retrieve the details of attraction place from Attraction-list.js
 */
 export default function AttractionDetail({ route }) {
-  const { Attraction, Description, Address, Coordinates, PhoneNo, Website } =
-    route.params;
+  const {
+    Attraction,
+    Description,
+    Address,
+    Coordinates,
+    TelephoneNumber,
+    Website,
+  } = route.params;
   const isSaved = false;
 
   const addBookmark = async () => {
@@ -47,6 +53,33 @@ export default function AttractionDetail({ route }) {
     alert("Bookmark removed!");
   };
 
+  const [safetyData, setSafetyData] = useState({
+    link: "",
+    rules: "",
+  });
+
+  const getSafetyData = async () => {
+    firebase
+      .database()
+      //this is harcoded for testing. to push new bookmark to a user will be "Accounts/" + "user1"
+      .ref("Attraction")
+      .orderByKey()
+      .on("value", (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          setSafetyData({
+            link: childSnapshot.val().link,
+            rules: childSnapshot.val().rules,
+          });
+        });
+      });
+  };
+
+  useEffect(() => {
+    getSafetyData();
+  }, []);
+
+  const safetyArray = safetyData.rules.split(";");
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -84,7 +117,7 @@ export default function AttractionDetail({ route }) {
             </View>
             <View style={styles.contactInfoContainer}>
               <Fontisto name="phone" size={20} color="black" />
-              <Text style={styles.infoStyle}>{PhoneNo}</Text>
+              <Text style={styles.infoStyle}>{TelephoneNumber}</Text>
             </View>
             <View style={styles.contactInfoContainer}>
               <Fontisto name="world" size={20} color="black" />
@@ -95,6 +128,40 @@ export default function AttractionDetail({ route }) {
                 }}
               >
                 Website
+              </Text>
+            </View>
+
+            <View style={styles.safetyContainer}>
+              {/*Newly Added*/}
+              {safetyArray.map((item) => (
+                <>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      paddingHorizontal: 10,
+                      marginTop: 10,
+                    }}
+                  >
+                    <AntDesign name="Safety" size={24} color="black" />
+                    <Text key={item.i} style={styles.infoStyle}>
+                      {item}
+                    </Text>
+                  </View>
+                </>
+              ))}
+            </View>
+            <View style={styles.contactInfoContainer}>
+              {/*Newly Added*/}
+              <Text
+                style={[
+                  styles.website,
+                  { alignItems: "center", justifyContent: "center" },
+                ]}
+                onPress={() => {
+                  Linking.openURL(safetyData.link);
+                }}
+              >
+                More information on Social Distancing
               </Text>
             </View>
           </View>
@@ -159,6 +226,11 @@ const styles = StyleSheet.create({
   nameAndBM: {
     alignItems: "center",
     flexDirection: "row",
-    paddingHorizontal: 14,
+    // paddingHorizontal: 14,
+  },
+
+  safetyContainer: {
+    flex: 1,
+    flexDirection: "column",
   },
 });
