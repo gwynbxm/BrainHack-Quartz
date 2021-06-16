@@ -1,0 +1,20 @@
+[
+  {
+    "public_hospital_name": "Queen Mary Hospital",
+    "address": "102 Pokfulam Road Pokfulam",
+    "tel": "2855 3838",
+    "website": "http://www.ha.org.hk/qmh"
+  },
+  {
+    "public_hospital_name": "Ruttonjee Hospital",
+    "address": "266 Queen’s Road East Wan Chai",
+    "tel": "2291 2000",
+    "website": "http://www.ha.org.hk/haho/ho/hesd/100144e.htm"
+  },
+  {
+    "public_hospital_name": "Pamela Youde Nethersole Eastern Hospital",
+    "address": "3 Lok Man Road Chai Wan",
+    "tel": "2595 6205",
+    "website": "http://www.ha.org.hk/pyneh"
+  }
+]
