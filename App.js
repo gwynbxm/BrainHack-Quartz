@@ -8,6 +8,7 @@ import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import AttractionDetail from "./components/Attraction/Attraction-detail";
 import AttractionList from "./components/Attraction/Attraction-list";
+import Doctor from "./components/Doctor/Doctor";
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -53,6 +54,7 @@ export default function App() {
           <Stack.Screen name="Home" component={BottomTabs} />
           <Stack.Screen name="Attraction Places" component={AttractionList} />
           <Stack.Screen name="Details" component={AttractionDetail} />
+          <Stack.Screen name="Healthcare Facilities" component={Doctor} />
         </>
       </Stack.Navigator>
     </NavigationContainer>

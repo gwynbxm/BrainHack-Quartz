@@ -170,17 +170,18 @@ export default function Doctor() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#eee",
+    backgroundColor: "#2F66C1",
     alignItems: "center",
   },
   website: {
-    color: "#03b1fc",
+    color: "#62A2F1",
     fontWeight: "bold",
     textAlign: "center",
   },
   headline: {
     fontSize: 20,
     marginTop: 0,
+    color: "white",
   },
   title: {
     fontSize: 16,

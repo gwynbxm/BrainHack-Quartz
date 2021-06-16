@@ -89,6 +89,9 @@ export default function Home({ navigation }) {
   const onPressViewAttraction = () => {
     navigation.navigate("Attraction Places");
   };
+  const onPressViewFacilities = () => {
+    navigation.navigate("Healthcare Facilities");
+  };
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -270,6 +273,17 @@ export default function Home({ navigation }) {
                 onPress={onPressViewAttraction}
               >
                 <Text style={styles.linkBtnTxt}>View Attraction</Text>
+              </TouchableOpacity>
+            ) : null}
+
+            {isToggle ? (
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                onPress={onPressViewFacilities}
+              >
+                <Text style={styles.linkBtnTxt}>
+                  View Healthcare facilities
+                </Text>
               </TouchableOpacity>
             ) : null}
           </View>

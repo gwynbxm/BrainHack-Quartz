@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
 
   website: {
     paddingHorizontal: 14,
-    color: "#03b1fc",
+    color: "#62A2F1",
     fontSize: 16,
   },
 
