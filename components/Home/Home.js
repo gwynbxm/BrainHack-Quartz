@@ -253,20 +253,13 @@ export default function Home({ navigation }) {
                   ) : null}
                 </View>
               ))}
-            </ScrollView>
-
-            {isToggle ? (
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                onPress={() => {
-                  Linking.openURL(requirements.link);
-                }}
-              >
-                <Text style={styles.linkBtnTxt}>
+              {isToggle ? (
+                <Text style={styles.moreInfoText}>
                   {countryChosenTo ? "More Information" : null}
                 </Text>
-              </TouchableOpacity>
-            ) : null}
+              ) : null}
+            </ScrollView>
+
             {isToggle ? (
               <TouchableOpacity
                 style={styles.buttonStyle}
@@ -365,7 +358,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#051C60",
     borderRadius: 10,
-    marginTop: 15,
+    marginTop: 10,
     alignItems: "center",
   },
 
@@ -378,12 +371,19 @@ const styles = StyleSheet.create({
   linkBtnTxt: {
     textTransform: "uppercase",
     color: "white",
-    fontSize: 18,
+    fontSize: 15,
   },
   action: {
     flexDirection: "row",
     marginTop: 10,
     marginBottom: 10,
     paddingBottom: 5,
+  },
+
+  moreInfoText: {
+    color: "#62A2F1",
+    alignSelf: "center",
+    fontSize: 18,
+    textTransform: "uppercase",
   },
 });

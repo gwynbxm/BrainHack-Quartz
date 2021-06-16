@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-
+import * as ImagePicker from "expo-image-picker";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -154,24 +154,61 @@ function Profile({ navigation }) {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => <Button onPress={signOut} title="Log Out" />,
+      headerRight: () => (
+        <TouchableOpacity onPress={signOut}>
+          <Text style={styles.logoutBtn}> Log Out</Text>
+        </TouchableOpacity>
+      ),
     });
   });
 
   const doNothing = () => {
     return;
   };
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   return (
     <View style={styles.container}>
       {/* Profile Picture */}
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={pickImage}>
         <View style={styles.dpContainer}>
           <ImageBackground
             style={styles.profileDp}
             imageStyle={{ borderRadius: 100 }}
             source={{
-              uri: userData.profilePic,
+              uri: image
+                ? image
+                : userData
+                ? userData.profilePic ||
+                  "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg"
+                : "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg",
             }}
           >
             <View style={styles.cameraContainer}>
@@ -182,7 +219,11 @@ function Profile({ navigation }) {
       </TouchableOpacity>
 
       {/* Vaccination Status, vaccine_pp (added TouchableOpacity) */}
-      <TouchableOpacity onPress={() => {userData.vaccine? navigation.navigate("Vaccine"):doNothing()}} >
+      <TouchableOpacity
+        onPress={() => {
+          userData.vaccine ? navigation.navigate("Vaccine") : doNothing();
+        }}
+      >
         <View
           style={{
             padding: 15,
@@ -193,7 +234,6 @@ function Profile({ navigation }) {
             borderWidth: 2,
             borderColor: userData.vaccine ? "green" : "red",
           }}
-          
         >
           <FontAwesome5
             name="syringe"
@@ -206,7 +246,6 @@ function Profile({ navigation }) {
           </Text>
         </View>
       </TouchableOpacity>
-      
 
       {/* First Name */}
       <View style={styles.action}>
@@ -358,5 +397,11 @@ const styles = StyleSheet.create({
     backgroundColor: "pink",
     marginTop: 10,
     width: "90%",
+  },
+
+  logoutBtn: {
+    color: "#62A2F1",
+    textTransform: "uppercase",
+    marginRight: 15,
   },
 });
