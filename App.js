@@ -1,5 +1,6 @@
+import { LogBox } from "react-native";
+LogBox.ignoreAllLogs();
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -9,11 +10,7 @@ import Profile from "./components/Profile/Profile";
 import AttractionDetail from "./components/Attraction/Attraction-detail";
 import AttractionList from "./components/Attraction/Attraction-list";
 import Doctor from "./components/Doctor/Doctor";
-import Register from "./components/Register/Register";
-import Login from "./components/Login/Login";
-
-// vaccine_pp
-import Vaccine from "./components/Profile/Vaccine";
+import SplashScreen from "./SplashScreen";
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -57,21 +54,19 @@ export default function App() {
       <Stack.Navigator>
         <>
           <Stack.Screen
+            name="Splash"
+            component={SplashScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="Home"
             component={BottomTabs}
             options={{ headerShown: false }}
           />
 
-          {/* <Stack.Screen mame="Profile" component={Profile} /> */}
           <Stack.Screen name="Attraction Places" component={AttractionList} />
           <Stack.Screen name="Details" component={AttractionDetail} />
           <Stack.Screen name="Healthcare Facilities" component={Doctor} />
-          {/* <Stack.Screen name="Guest" component={Guest} /> */}
-          {/* <Stack.Screen name="Register" component={Register} /> */}
-          {/* <Stack.Screen name="Login" component={Login} /> */}
-
-          {/* vaccine_pp */}
-          {/* <Stack.Screen name="Vaccine" component={Vaccine} /> */}
         </>
       </Stack.Navigator>
     </NavigationContainer>

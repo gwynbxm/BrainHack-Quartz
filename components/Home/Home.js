@@ -15,8 +15,8 @@ import firebase from "../../config";
 
 export default function Home({ navigation }) {
   const [countryChosenTo, setCountryTo] = useState();
-  const [placeholderTo, setPlaceHolderTo] = useState("To");
-  const [placeholderFrom, setPlaceHolderFrom] = useState("From");
+  const [placeholderTo, setPlaceHolderTo] = useState("Arrival");
+  const [placeholderFrom, setPlaceHolderFrom] = useState("Depart");
   const [statsTitle, setStatsTitle] = useState("");
 
   //TextOutput
