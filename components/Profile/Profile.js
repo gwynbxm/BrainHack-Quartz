@@ -22,6 +22,9 @@ import firebase from "../../config.js";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 
+// vaccine_pp
+import Vaccine from "./Vaccine.js";
+
 const Stack = createStackNavigator();
 
 export default function ProfileStack() {
@@ -31,6 +34,9 @@ export default function ProfileStack() {
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="Login" component={Login} />
+
+      {/* vaccine_pp */}
+      <Stack.Screen name="Vaccine" component={Vaccine} />
     </Stack.Navigator>
   );
 }
@@ -175,27 +181,32 @@ function Profile({ navigation }) {
         </View>
       </TouchableOpacity>
 
-      {/* Vaccination Status */}
-      <View
-        style={{
-          padding: 15,
-          width: "100%",
-          borderRadius: 10,
-          marginTop: 15,
-          alignItems: "center",
-          borderWidth: 2,
-          borderColor: userData.vaccine ? "green" : "red",
-        }}
-      >
-        <FontAwesome5
-          name="syringe"
-          size={24}
-          color={userData.vaccine ? "green" : "red"}
-        />
-        <Text style={{ color: userData.vaccine ? "green" : "red" }}>
-          {userData.vaccine ? "Vaccinated" : "Not vaccinated"}
-        </Text>
-      </View>
+      {/* Vaccination Status, vaccine_pp (added TouchableOpacity) */}
+      <TouchableOpacity onPress={() => {userData.vaccine? navigation.navigate("Vaccine"):doNothing()}} >
+        <View
+          style={{
+            padding: 15,
+            width: "100%",
+            borderRadius: 10,
+            marginTop: 15,
+            alignItems: "center",
+            borderWidth: 2,
+            borderColor: userData.vaccine ? "green" : "red",
+          }}
+          
+        >
+          <FontAwesome5
+            name="syringe"
+            size={24}
+            color={userData.vaccine ? "green" : "red"}
+          />
+          {/* vaccine_pp - edited text for if vaccinated*/}
+          <Text style={{ color: userData.vaccine ? "green" : "red" }}>
+            {userData.vaccine ? "Vaccinated\n>>View Records" : "Not vaccinated"}
+          </Text>
+        </View>
+      </TouchableOpacity>
+      
 
       {/* First Name */}
       <View style={styles.action}>
