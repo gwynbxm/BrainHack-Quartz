@@ -14,7 +14,7 @@ import SearchableDropdown from "react-native-searchable-dropdown";
 import { Ionicons } from "@expo/vector-icons";
 import firebase from "../../config";
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [countryChosenTo, setCountryTo] = useState();
   const [placeholderTo, setPlaceHolderTo] = useState("To");
   const [placeholderFrom, setPlaceHolderFrom] = useState("From");
@@ -86,6 +86,10 @@ export default function Home() {
   useEffect(() => {
     getReq();
   }, []);
+
+  const onPressViewAttraction = () => {
+    navigation.navigate("Attraction Places");
+  };
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -262,7 +266,10 @@ export default function Home() {
               </TouchableOpacity>
             ) : null}
             {isToggle ? (
-              <TouchableOpacity style={styles.buttonStyle} onPress={() => {}}>
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                onPress={onPressViewAttraction}
+              >
                 <Text style={styles.linkBtnTxt}>View Attraction</Text>
               </TouchableOpacity>
             ) : null}
