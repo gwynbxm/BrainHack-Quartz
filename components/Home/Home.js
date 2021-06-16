@@ -1,4 +1,3 @@
-// import * as React from "react";
 import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
@@ -237,7 +236,7 @@ export default function Home({ navigation }) {
               <Text style={styles.subTitle}>Requirements</Text>
             ) : null}
 
-            <ScrollView>
+            <ScrollView persistentScrollbar={true}>
               {/* This is where the requirements will be */}
               {reqArray.map((item) => (
                 <View style={styles.action}>
