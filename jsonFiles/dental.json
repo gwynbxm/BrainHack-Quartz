@@ -1,0 +1,92 @@
+[
+  {
+    "Dental": "Dr James Woo & Associates",
+    "WeekdayOperatingHours": "Mon-Fri 09:00-18:00",
+    "WeekendOperatingHours": "Sat 09:00-13:00",
+    "Address": "908 Crawford House,70 Queen's Road Central",
+    "Telephone": "2869 6986",
+    "Notes": "-",
+    "Website": "-"
+  },
+  {
+    "Dental": "A J Smith & Jain",
+    "WeekdayOperatingHours": "Mon-Fri 08:00-17:00",
+    "WeekendOperatingHours": "Sat 08:00-13:00",
+    "Address": "Room 703, Century Square, 1 D'Aguilar Street, Central",
+    "Telephone": "2526 2383 / 2526 2384",
+    "Notes": "Emergency services available",
+    "Website": "http://www.smithandjaindentists.com"
+  },
+  {
+    "Dental": "Dr Raymond Li",
+    "WeekdayOperatingHours": "Mon-Fri 09:00-19:00",
+    "WeekendOperatingHours": "Sat 09:00-17:00",
+    "Address": "Room 1709, 17/F East Point Centre, 555 Hennessy Road, Causeway Bay",
+    "Telephone": "2566 5866",
+    "Notes": "-",
+    "Website": "http://www.drrayli.com.hk"
+  },
+  {
+    "Dental": "Dr Titania Tong & Associates (holistic dental services)",
+    "WeekdayOperatingHours": "Mon-Fri 09:30-13:00, 14:30-18:30",
+    "WeekendOperatingHours": "Sat 09:30-13:00",
+    "Address": "Room 1503, Winway Building, 50 Wellington St, Central",
+    "Telephone": "2810 1801",
+    "Notes": "-",
+    "Website": "http://www.dr-tong.com"
+  },
+  {
+    "Dental": "iOrtho Dental ( multi-lingual services)",
+    "Weekday Operating Hours": "Mon, Thu-Fri 10:00-13:30, 14:30-18:30, Tue 10:00-13:30, Wed 14:30-18:30",
+    "Weekend Operating Hours": "Sat 10:00-13:30, 14:30-17:00",
+    "Address": "Room 1002, 10/F Manning House, 48 Queens Road Central",
+    "Telephone": "3586 9710",
+    "Notes": "-",
+    "Website": "http://www.iortho.hk"
+  },
+  {
+    "Dental": "Dr Gregory Taylor",
+    "Weekday Operating Hours": "Mon-Fri 09:30-17:30",
+    "Weekend Operating Hours": "-",
+    "Address": "1501 Tak Shing House, 20 Des Voeux Road Central",
+    "Telephone": "2526 6866",
+    "Notes": "-",
+    "Website": "http://www.drgttaylor.com"
+  },
+  {
+    "Dental": "Tam, Hulac & Partners Dental",
+    "Weekday Operating Hours": "Mon-Fri 09:00-18:00",
+    "Weekend Operating Hours": "Sat 09:00-13:00",
+    "Address": "Room 1506 World-Wide House, 19 Des Voeux Road, Central",
+    "Telephone": "2868 1775",
+    "Notes": "-",
+    "Website": "http://www.thpdental.com"
+  },
+  {
+    "Dental": "Hong Kong Japanese Dental Clinic (multilingual services)",
+    "Weekday Operating Hours": "Mon-Sat 10:00-19:00",
+    "Weekend Operating Hours": "-",
+    "Address": "Room 1503, 15/F World Trade Centre, 280 Gloucester Road, Causeway Bay",
+    "Telephone": "2808 4768",
+    "Notes": "-",
+    "Website": "-"
+  },
+  {
+    "Dental": "American Dental Group",
+    "Weekday Operating Hours": "-",
+    "Weekend Operating Hours": "-",
+    "Address": "513-518 Prince's Building, 10 Chater Road, Central",
+    "Telephone": "2526 2288",
+    "Notes": "After-hours emergency services available",
+    "Website": "http://www.adgl.com.hk/"
+  },
+  {
+    "Dental": "Bayley & Jackson Dental Surgeons",
+    "Weekday Operating Hours": "-",
+    "Weekend Operating Hours": "-",
+    "Address": "Various locations",
+    "Telephone": "2525 2239",
+    "Notes": "24-hour emergency service available",
+    "Website": "http://www.bjdental.com"
+  }
+]

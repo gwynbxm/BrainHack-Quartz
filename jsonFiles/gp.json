@@ -1,0 +1,30 @@
+[
+  {
+    "general_prac_name": "Island Health Family Practice",
+    "openingHours": "Mon-Thu 08:00-19:00;Fri 08:00-18:00;Sat 09:00-14:00",
+    "address": "Shop 109A Discovery Bay Plaza Discovery Bay",
+    "tel": "2987 7575",
+    "website": "http://www.islandhealth.com.hk"
+  },
+  {
+    "general_prac_name": "Ken Lee Medical Centre",
+    "openingHours": "Mon-Fri 10:00-13:00,15:00-19:00; Sat 10:00-13:00, 15:00-17:00",
+    "address": "Rooms 1825-27 Argyle Centre Phase 1,688 Nathan Road, Mongkok",
+    "tel": "2787 0222",
+    "website": "http://www.yp.com.hk/kenleemed"
+  },
+  {
+    "general_prac_name": "Raffles Medical",
+    "openingHours": "Mon-Fri 08:30-18:00;Sat 08:30-13:00",
+    "address": "Suites 906-7, Lincoln House Taikoo Place, 979 King's Road",
+    "tel": "2525 1730",
+    "website": "http://www.rafflesmedicalgroup.com"
+  },
+  {
+    "general_prac_name": "Central Health Medical Practice",
+    "openingHours": "Mon-Fri 08:30-18:00;Sat 09:00-13:00",
+    "address": "3/F Baskerville House 13 Duddell Street, Central",
+    "tel": "2824 0822",
+    "website": "http://www.centralhealth.com.hk"
+  }
+]

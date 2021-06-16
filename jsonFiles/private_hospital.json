@@ -1,0 +1,38 @@
+[
+  {
+    "hospital_name": "Hong Kong Adventist Hospital",
+    "address": "40 Stubbs Road Mid-Levels",
+    "tel": "2547 6211",
+    "website": "http://www.hkah.org.hk"
+  },
+  {
+    "hospital_name": "Canossa Hospital",
+    "address": "1 Old Peak Road Mid-Levels",
+    "tel": "2522 2181",
+    "website": "http://www.canossahospital.org.hk"
+  },
+  {
+    "hospital_name": "Hong Kong Sanatorium & Hospital",
+    "address": "2 Village Road Happy Valley",
+    "tel": "2572 021",
+    "website": "http://www.hksh.org.hk"
+  },
+  {
+    "hospital_name": "Hong Kong Baptist Hospital",
+    "address": "222 Waterloo Road Kowloon Tong",
+    "tel": "2339 8888",
+    "website": "http://www.hkbh.org.hk"
+  },
+  {
+    "hospital_name": "Matilda International Hospital",
+    "address": "41 Mount Kellett Road\nThe Peak",
+    "tel": "2849 0111",
+    "website": "http://www.matilda.org"
+  },
+  {
+    "hospital_name": "The Hong Kong Central Hospital",
+    "address": "1 Lower Albert Road\nCentral",
+    "tel": "2522 3141",
+    "website": "http://www.hkch.org/"
+  }
+]
