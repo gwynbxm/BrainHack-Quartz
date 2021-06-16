@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Linking, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Linking,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import { Fontisto, AntDesign } from "@expo/vector-icons";
 import firebase from "../../config";
 /*
@@ -17,10 +24,12 @@ export default function AttractionDetail({ route }) {
   const isSaved = false;
 
   const addBookmark = async () => {
+    const userUid = firebase.auth().currentUser.uid;
+
     firebase
       .database()
       //this is harcoded for testing. to push new bookmark to a user will be "Accounts/" + "user1"
-      .ref("Accounts/user1/Bookmarks")
+      .ref("Accounts/" + userUid + "/Bookmarks")
       .once("value")
       .then(function (snapshot) {
         snapshot.forEach(function (accountSnapshot) {
@@ -85,24 +94,23 @@ export default function AttractionDetail({ route }) {
       <View style={styles.topContainer}>
         <View style={styles.nameAndBM}>
           <Text style={styles.attractionName}>{Attraction}</Text>
-          <View
-            style={{
-              borderRadius: 50,
-              backgroundColor: "blue",
-              width: 35,
-              height: 35,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+
+          <Pressable
+            onPress={() => addBookmark()}
+            style={({ pressed }) => [
+              { backgroundColor: pressed ? "#051C60" : "#B4D9EE" },
+              styles.buttonStyle,
+            ]}
           >
-            {/*<Fontisto name="bookmark-alt" size={24} color="black" />*/}
-            <Fontisto
-              name="bookmark"
-              size={24}
-              color="black"
-              onPress={() => addBookmark()}
-            />
-          </View>
+            {({ pressed }) => (
+              <Fontisto
+                name="bookmark"
+                size={20}
+                style={[{ color: pressed ? "white" : "black" }]}
+                onPress={() => addBookmark()}
+              />
+            )}
+          </Pressable>
         </View>
 
         <Text style={[styles.infoStyle, { paddingVertical: 10 }]}>
@@ -232,5 +240,25 @@ const styles = StyleSheet.create({
   safetyContainer: {
     flex: 1,
     flexDirection: "column",
+  },
+
+  buttonStyle: {
+    padding: 15,
+    // backgroundColor: "#B4D9EE",
+
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 20,
+    height: 40,
+    width: 40,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  linkBtnIcon: {
+    textTransform: "uppercase",
+    // color: "black",
+    fontSize: 18,
   },
 });
